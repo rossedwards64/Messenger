@@ -1,7 +1,7 @@
 package com.rossedwards.nsdassignment;
 // needs compiling
 // javac -cp json-simple-1.1.1.jar;. Request.java
-import com.rossedwards.nsdassignment.json.simple.*;
+import org.json.simple.*;
 
 public abstract class Request implements JSONAware {
 

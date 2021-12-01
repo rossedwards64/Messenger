@@ -20,7 +20,7 @@ public class Client {
                 Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
                 ) {
             String userInput;
             while((userInput = stdIn.readLine()) != null) {
@@ -47,7 +47,7 @@ public class Client {
                     continue;
                 }
 
-                out.println(request);
+                //out.println(request);
 
                 // disconnects client if there is not response from the server
                 String serverResponse;
