@@ -3,7 +3,7 @@ package com.rossedwards.nsdassignment;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class MessageBoardController {
     @FXML
     private Label welcomeText;
 

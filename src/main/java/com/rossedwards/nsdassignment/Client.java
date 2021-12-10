@@ -1,7 +1,6 @@
 package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONValue;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Client {
-
     public static void main(String[] args) {
         String hostName = "localhost";
         int portNumber = 12345;

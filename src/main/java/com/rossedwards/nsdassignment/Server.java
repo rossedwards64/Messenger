@@ -106,8 +106,7 @@ public class Server {
                     out.println(new ErrorResponse("ILLEGAL REQUEST"));
                 }
             } catch (IOException e) {
-                System.out.println("An error occurred. Client disconnected.");
-                e.printStackTrace();
+                System.err.println("An error occurred. Client disconnected.");
             }
         }
     }
@@ -122,9 +121,8 @@ public class Server {
             }
 
         } catch (IOException e) {
-            System.out.println("Exception listening for connection on port " +
+            System.err.println("Exception listening for connection on port " +
                     portNumber);
-            e.printStackTrace();
         }
     }
 }
