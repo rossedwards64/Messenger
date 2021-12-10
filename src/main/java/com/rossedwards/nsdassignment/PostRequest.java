@@ -20,6 +20,7 @@ public class PostRequest extends Request {
     public Object toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("_class", _class);
+        obj.put("message", message);
         return obj;
     }
 

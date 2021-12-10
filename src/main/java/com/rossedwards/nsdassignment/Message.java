@@ -2,12 +2,19 @@ package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONObject;
 
-public record Message(String body, String author, long timeStamp) {
+public class Message {
     private static final String _class = Message.class.getSimpleName();
 
-    public Message {
+    String body;
+    String author;
+    long timeStamp;
+
+    public Message(String body, String author, long timeStamp) {
         if (body == null | author == null)
             throw new NullPointerException();
+        this.body = body;
+        this.author = author;
+        this.timeStamp = timeStamp;
     }
 
     public String getBody() {

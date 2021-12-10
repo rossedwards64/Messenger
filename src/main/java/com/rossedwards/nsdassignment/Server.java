@@ -12,6 +12,10 @@ public class Server {
     static class Clock {
         private long time;
 
+        public Clock() {
+            time = 0;
+        }
+
         public synchronized long getCurrentTime() {
             return ++time;
         }
@@ -25,11 +29,13 @@ public class Server {
         // login credentials
         private String login;
 
+        private Socket client;
         private final PrintWriter out;
         private final BufferedReader in;
 
         // class constructor to initialise socket and so client can send and receive messages
         public ClientHandler(Socket socket) throws IOException {
+            client = socket;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             read = 0;
@@ -72,6 +78,7 @@ public class Server {
                         }
                         // let user know that the post request was received
                         out.println(new SuccessResponse());
+                        continue;
                     }
 
                     // READ REQUEST
