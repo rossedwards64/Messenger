@@ -2,13 +2,34 @@ package com.rossedwards.nsdassignment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class MessageBoardController {
-    @FXML
-    private Label welcomeText;
+
+    Client client;
+    PrintWriter out;
+    Scanner reader;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private Label username;
+
+    @FXML
+    private TextField sendMessageBox;
+
+    @FXML
+    protected void startClient() {
+
+    }
+
+    @FXML
+    protected void sendMessage() {
+
+    }
+
+    @FXML
+    protected void setUsernameLabelText() {
+
     }
 }

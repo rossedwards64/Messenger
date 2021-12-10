@@ -119,7 +119,6 @@ public class Server {
                 Socket clientSocket = serverSocket.accept();
                 new ClientHandler(clientSocket).start();
             }
-
         } catch (IOException e) {
             System.err.println("Exception listening for connection on port " +
                     portNumber);

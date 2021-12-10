@@ -1,84 +1,94 @@
 package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONValue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Client {
-    public static void main(String[] args) {
+    Socket socket;
+    PrintWriter out;
+    BufferedReader reader;
+    Request request;
+    Response response;
+    String serverResponse;
+    Object json;
+
+    Client() throws IOException {
         String hostName = "localhost";
         int portNumber = 12345;
+        socket = new Socket(hostName, portNumber);
+        out = new PrintWriter(socket.getOutputStream(), true);
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    }
 
-        try(
-                Socket socket = new Socket(hostName, portNumber);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
-                ) {
-            String userInput;
-            while((userInput = stdIn.readLine()) != null) {
-                Request request;
-                Scanner scan = new Scanner(userInput);
-                try {
-                    switch (scan.next()) {
-                        // client features going to be made console based
-                        // for testing until gui is ready to use
-                        case "login":
-                            request = new LoginRequest(scan.skip(" ").nextLine());
-                            break;
-                        case "post":
-                            request = new PostRequest(scan.skip(" ").nextLine());
-                            break;
-                        case "read":
-                            request = new ReadRequest();
-                            break;
-                        case "quit":
-                            request = new QuitRequest();
-                            break;
-                        default:
-                            System.out.println("ILLEGAL COMMAND");
-                            continue;
-                    }
-                } catch(NoSuchElementException e) {
-                    System.out.println("ILLEGAL COMMAND");
-                    continue;
-                }
+    public void setRequestLogin() throws IOException {
+        if((serverResponse = reader.readLine()) == null)
+        request = new LoginRequest(reader.readLine());
+        processRequest();
+    }
 
-                out.println(request);
+    public void setRequestPost() throws IOException {
+        request = new PostRequest(reader.readLine());
+        processRequest();
+    }
 
-                // disconnects client if there is no response from the server
-                String serverResponse;
-                if((serverResponse = in.readLine()) == null)
-                    break;
+    public void setRequestRead() throws IOException {
+        request = new ReadRequest();
+        processRequest();
+    }
 
-                Object json = JSONValue.parse(serverResponse);
-                Response response;
+    public void setRequestQuit() throws IOException {
+        request = new QuitRequest();
+        processRequest();
+    }
 
-                if(SuccessResponse.fromJSON(json) != null)
-                    continue;
+    public void processRequest() throws IOException {
+        out.println(request);
+        if((serverResponse = reader.readLine()) == null)
+            return;
 
-                if((response = MessageListResponse.fromJSON(json)) != null) {
-                    for (Message message : ((MessageListResponse) response).getMessages())
-                        System.out.println(message);
-                    continue;
-                }
+        json = JSONValue.parse(serverResponse);
 
-                if((response = ErrorResponse.fromJSON(json)) != null) {
-                    System.out.println(((ErrorResponse) response).getError());
-                    continue;
-                }
+        if(SuccessResponse.fromJSON(json) == null)
+            return;
 
-                // No response
-                System.out.println("PANIC: " + serverResponse + " parsed as " + json);
-            }
-        } catch (IOException e) {
-            System.err.println("Couldn't get input/output for the connection to " + hostName);
+        if((response = MessageListResponse.fromJSON(json)) != null) {
+            for(Message message : ((MessageListResponse) response).getMessages())
+                System.out.println(message);
         }
 
+        if((response = ErrorResponse.fromJSON(json)) != null) {
+            System.out.println(((ErrorResponse) response).getError());
+        }
     }
+
+//                String serverResponse;
+//                if((serverResponse = in.readLine()) == null)
+//                    break;
+//
+//                Object json = JSONValue.parse(serverResponse);
+//                Response response;
+//
+//                if(SuccessResponse.fromJSON(json) != null)
+//                    continue;
+//
+//                if((response = MessageListResponse.fromJSON(json)) != null) {
+//                    for (Message message : ((MessageListResponse) response).getMessages())
+//                        System.out.println(message);
+//                    continue;
+//                }
+//
+//                if((response = ErrorResponse.fromJSON(json)) != null) {
+//                    System.out.println(((ErrorResponse) response).getError());
+//                    continue;
+//                }
+//
+//                // No response
+//                System.out.println("PANIC: " + serverResponse + " parsed as " + json);
+
 }
