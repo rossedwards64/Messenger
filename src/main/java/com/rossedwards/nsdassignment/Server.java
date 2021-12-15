@@ -106,7 +106,7 @@ public class Server {
                     out.println(new ErrorResponse("ILLEGAL REQUEST"));
                 }
             } catch (IOException e) {
-                System.err.println("An error occurred. Client disconnected.");
+                System.err.println("Client disconnected.");
             }
         }
     }

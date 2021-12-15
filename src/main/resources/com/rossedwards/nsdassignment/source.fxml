@@ -9,6 +9,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rossedwards.nsdassignment.MessageBoardController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rossedwards.nsdassignment.MessageBoardController">
   <VBox prefHeight="720.0" prefWidth="1280.0">
     <MenuBar VBox.vgrow="NEVER">
       <Menu mnemonicParsing="false" text="File">
@@ -61,7 +62,7 @@
           </textFill>
         </Label>
         <TextField fx:id="sendMessageBox" layoutX="19.0" layoutY="52.0" prefHeight="25.0" prefWidth="224.0" />
-        <Button layoutX="251.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="Send" />
+        <Button fx:id="sendMessageButton" layoutX="251.0" layoutY="52.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="25.0" prefWidth="58.0" text="Send" />
         <Label alignment="CENTER" layoutX="14.0" layoutY="100.0" minWidth="60.0" style="&#10;" text="Profile" textAlignment="CENTER">
           <font>
             <Font size="18.0" fx:id="x11" />
@@ -71,33 +72,33 @@
           </textFill>
         </Label>
             <Label layoutX="19.0" layoutY="127.0" prefHeight="40.0" prefWidth="40.0" text="Name:" />
-            <Label layoutX="60.0" layoutY="127.0" prefHeight="40.0" prefWidth="129.0" text="User" />
+            <Label layoutX="60.0" layoutY="127.0" prefHeight="40.0" prefWidth="150.0" text="User" />
+            <Button fx:id="setUsernameButton" layoutX="214.0" layoutY="134.0" mnemonicParsing="false" text="Set Username" />
       </AnchorPane>
       <ScrollPane>
         <AnchorPane id="Content" prefHeight="672.0" prefWidth="633.0">
-          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Chat View"
-                 textAlignment="CENTER" textFill="$x2"/>
+          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Chat View" textAlignment="CENTER" textFill="$x2" />
+               <TextArea fx:id="display" layoutX="54.0" layoutY="53.0" prefHeight="575.0" prefWidth="510.0" />
         </AnchorPane>
       </ScrollPane>
       <AnchorPane>
-        <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Channels"
-               textAlignment="CENTER" textFill="$x2"/>
+        <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Channels" textAlignment="CENTER" textFill="$x2" />
       </AnchorPane>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
       </padding>
       <Label maxHeight="1.7976931348623157E308" text="Left status" HBox.hgrow="ALWAYS">
         <font>
-          <Font size="11.0" fx:id="x3"/>
+          <Font size="11.0" fx:id="x3" />
         </font>
         <textFill>
-          <Color red="0.625" green="0.625" blue="0.625" fx:id="x4"/>
+          <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
         </textFill>
       </Label>
-      <Pane HBox.hgrow="ALWAYS"/>
-      <Label font="$x3" text="Right status" textFill="$x4" HBox.hgrow="NEVER"/>
+      <Pane HBox.hgrow="ALWAYS" />
+      <Label font="$x3" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
     </HBox>
   </VBox>
 </AnchorPane>
