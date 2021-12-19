@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Client {
@@ -15,76 +14,71 @@ public class Client {
     PrintWriter writer;
     Scanner reader;
     BufferedReader in;
-    BufferedReader stdIn;
+    Request request;
+    Response response;
+    String serverResponse;
+    Object json;
 
-    public Client(Socket socket) throws IOException {
+    public Client(Socket socket, String username) throws IOException {
+        this.username = username;
         this.socket = socket;
         this.writer = new PrintWriter(socket.getOutputStream(), true);
         this.reader = new Scanner(socket.getInputStream());
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.stdIn = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public void clientFunction(String userInput) {
-        try {
-            while((userInput = stdIn.readLine()) != null) {
-                Request request;
-                Scanner scan = new Scanner(userInput);
-                try {
-                    switch (scan.next()) {
-                        // client features going to be made console based
-                        // for testing until gui is ready to use
-                        case "login":
-                            request = new LoginRequest(scan.skip(" ").nextLine());
-                            break;
-                        case "post":
-                            request = new PostRequest(scan.skip(" ").nextLine());
-                            break;
-                        case "read":
-                            request = new ReadRequest();
-                            break;
-                        case "quit":
-                            request = new QuitRequest();
-                            break;
-                        default:
-                            System.out.println("ILLEGAL COMMAND");
-                            continue;
-                    }
-                } catch(NoSuchElementException e) {
-                    System.out.println("ILLEGAL COMMAND");
-                    continue;
-                }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-                writer.println(request);
+    public String getUsername() {
+        return username;
+    }
 
-                // disconnects client if there is no response from the server
-                String serverResponse;
-                if((serverResponse = in.readLine()) == null)
-                    break;
+    public void setRequestLogin(String username) throws IOException {
+        reader = new Scanner(username);
+        request = new LoginRequest(reader.nextLine());
+        processRequest();
+    }
 
-                Object json = JSONValue.parse(serverResponse);
-                Response response;
+    public void setRequestPost(String message) throws IOException {
+        reader = new Scanner(message);
+        request = new PostRequest(reader.nextLine());
+        processRequest();
+    }
 
-                if(SuccessResponse.fromJSON(json) != null)
-                    continue;
+    public void setRequestRead() throws IOException {
+        request = new ReadRequest();
+        processRequest();
+    }
 
-                if((response = MessageListResponse.fromJSON(json)) != null) {
-                    for (Message message : ((MessageListResponse) response).getMessages())
-                        System.out.println(message);
-                    continue;
-                }
+    public void setRequestQuit() throws IOException {
+        request = new QuitRequest();
+        processRequest();
+    }
 
-                if((response = ErrorResponse.fromJSON(json)) != null) {
-                    System.out.println(((ErrorResponse) response).getError());
-                    continue;
-                }
+    public void closeSocket() throws IOException {
+        socket.close();
+    }
 
-                // No response
-                System.out.println("PANIC: " + serverResponse + " parsed as " + json);
-            }
-        } catch (IOException e) {
-            System.err.println("Couldn't get input/output for the connection to " + socket.getInetAddress());
+    public void processRequest() throws IOException {
+        writer.println(request);
+        if((serverResponse = in.readLine()) != null)
+            return;
+
+        assert false;
+        json = JSONValue.parse(serverResponse);
+
+        if(SuccessResponse.fromJSON(json) != null)
+            return;
+
+        if((response = MessageListResponse.fromJSON(json)) != null) {
+            for(Message message : ((MessageListResponse) response).getMessages())
+                System.out.println(message);
         }
 
+        if((response = ErrorResponse.fromJSON(json)) != null) {
+            System.out.println(((ErrorResponse) response).getError());
+        }
     }
 }

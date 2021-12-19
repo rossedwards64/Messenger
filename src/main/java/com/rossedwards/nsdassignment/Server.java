@@ -29,13 +29,11 @@ public class Server {
         // login credentials
         private String login;
 
-        private Socket client;
         private final PrintWriter out;
         private final BufferedReader in;
 
         // class constructor to initialise socket and so client can send and receive messages
         public ClientHandler(Socket socket) throws IOException {
-            client = socket;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             read = 0;
