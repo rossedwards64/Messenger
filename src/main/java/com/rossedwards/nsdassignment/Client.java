@@ -1,6 +1,7 @@
 package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONValue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,10 +15,6 @@ public class Client {
     PrintWriter writer;
     Scanner reader;
     BufferedReader in;
-    Request request;
-    Response response;
-    String serverResponse;
-    Object json;
 
     public Client(Socket socket, String username) throws IOException {
         this.username = username;
@@ -37,47 +34,49 @@ public class Client {
 
     public void setRequestLogin(String username) throws IOException {
         reader = new Scanner(username);
-        request = new LoginRequest(reader.nextLine());
-        processRequest();
+        Request request = new LoginRequest(reader.nextLine());
+        processRequest(request);
     }
 
     public void setRequestPost(String message) throws IOException {
         reader = new Scanner(message);
-        request = new PostRequest(reader.nextLine());
-        processRequest();
+        Request request = new PostRequest(reader.nextLine());
+        processRequest(request);
     }
 
     public void setRequestRead() throws IOException {
-        request = new ReadRequest();
-        processRequest();
+        Request request = new ReadRequest();
+        processRequest(request);
     }
 
     public void setRequestQuit() throws IOException {
-        request = new QuitRequest();
-        processRequest();
+        Request request = new QuitRequest();
+        processRequest(request);
     }
 
     public void closeSocket() throws IOException {
         socket.close();
     }
 
-    public void processRequest() throws IOException {
+    public void processRequest(Request request) throws IOException {
         writer.println(request);
-        if((serverResponse = in.readLine()) != null)
+        String serverResponse;
+        if ((serverResponse = in.readLine()) == null)
             return;
 
-        assert false;
-        json = JSONValue.parse(serverResponse);
+        Object json = JSONValue.parse(serverResponse);
+        Response response;
 
-        if(SuccessResponse.fromJSON(json) != null)
+        if (SuccessResponse.fromJSON(json) != null)
             return;
 
-        if((response = MessageListResponse.fromJSON(json)) != null) {
-            for(Message message : ((MessageListResponse) response).getMessages())
+        if ((response = MessageListResponse.fromJSON(json)) != null) {
+            for (Message message : ((MessageListResponse) response).getMessages()) {
                 System.out.println(message);
+            }
         }
 
-        if((response = ErrorResponse.fromJSON(json)) != null) {
+        if ((response = ErrorResponse.fromJSON(json)) != null) {
             System.out.println(((ErrorResponse) response).getError());
         }
     }

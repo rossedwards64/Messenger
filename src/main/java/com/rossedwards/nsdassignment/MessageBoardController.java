@@ -1,10 +1,7 @@
 package com.rossedwards.nsdassignment;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,6 +28,18 @@ public class MessageBoardController {
     public TextField setUsernameField;
     public Label isConnectedLabel;
     public Button updateChat;
+    public ToggleButton subscribeButton;
+    public ToggleButton subscribeButton2;
+    public ToggleButton subscribeButton3;
+    public ToggleButton subscribeButton4;
+    public ToggleButton subscribeButton5;
+    public ToggleButton subscribeButton6;
+    public Button generalChannelButton;
+    public Button musicChannelButton;
+    public Button softwareChannelButton;
+    public Button gamingChannelButton;
+    public Button beekeepingChannelButton;
+    public Button literatureChannelButton;
 
     @FXML
     private Label usernameLabel;
@@ -67,17 +76,72 @@ public class MessageBoardController {
     @FXML
     protected void readChat() throws IOException {
         client.setRequestRead();
+        for (Message message : Server.ClientHandler.messageBoard) {
+            display.appendText(message + "\n");
+        }
     }
 
     @FXML
     protected void setUsernameLabelText() throws IOException {
         String username;
-        if((username = setUsernameField.getText()) != null) {
+        if ((username = setUsernameField.getText()) != null) {
+            Database.logIn(username);
             client.setRequestLogin(username);
             client.setUsername(username);
             usernameLabel.setText(username);
             setUsernameField.clear();
             display.appendText(client.getUsername() + " has entered the chat." + "\n");
+        }
+    }
+
+    @FXML
+    protected void subscribe() {
+        if (subscribeButton.isSelected()) {
+            subscribeButton.setText("Unsubscribe");
+            display.appendText("Welcome to the General Channel." + "\n");
+        } else {
+            subscribeButton.setText("Subscribe");
+            display.clear();
+        }
+
+        if (subscribeButton2.isSelected()) {
+            subscribeButton2.setText("Unsubscribe");
+            display.appendText("Welcome to the Music Channel." + "\n");
+        } else {
+            subscribeButton2.setText("Subscribe");
+            display.clear();
+        }
+
+        if (subscribeButton3.isSelected()) {
+            subscribeButton3.setText("Unsubscribe");
+            display.appendText("Welcome to the Software Engineering Channel." + "\n");
+        } else {
+            subscribeButton3.setText("Subscribe");
+            display.clear();
+        }
+
+        if (subscribeButton4.isSelected()) {
+            subscribeButton4.setText("Unsubscribe");
+            display.appendText("Welcome to the Gaming Channel." + "\n");
+        } else {
+            subscribeButton4.setText("Subscribe");
+            display.clear();
+        }
+
+        if (subscribeButton5.isSelected()) {
+            subscribeButton5.setText("Unsubscribe");
+            display.appendText("Welcome to the Beekeeping Channel." + "\n");
+        } else {
+            subscribeButton5.setText("Subscribe");
+            display.clear();
+        }
+
+        if (subscribeButton6.isSelected()) {
+            subscribeButton6.setText("Unsubscribe");
+            display.appendText("Welcome to the Literature Channel." + "\n");
+        } else {
+            subscribeButton6.setText("Subscribe");
+            display.clear();
         }
     }
 

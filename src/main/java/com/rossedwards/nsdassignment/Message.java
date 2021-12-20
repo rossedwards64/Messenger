@@ -34,7 +34,7 @@ public class Message {
         return author + ": " + body + " (" + timeStamp + ")";
     }
 
-    public Object toJSON() {
+    public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("_class", _class);
         obj.put("body", body);

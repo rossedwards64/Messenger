@@ -1,7 +1,11 @@
 package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONValue;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -21,33 +25,71 @@ public class Server {
         }
     }
 
+    // abstract all server responses to enable returning values
     static class ClientHandler extends Thread {
-        private static final List<Message> messageBoard = new ArrayList<>();
+        protected static final List<Message> messageBoard = new ArrayList<>();
         private static final Clock time = new Clock();
         // messages that have been opened are added to this counter
         private int read;
         // login credentials
         private String login;
+        private final Socket client;
 
         private final PrintWriter out;
         private final BufferedReader in;
 
         // class constructor to initialise socket and so client can send and receive messages
         public ClientHandler(Socket socket) throws IOException {
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            client = socket;
+            out = new PrintWriter(client.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             read = 0;
             // set to null until a login account has been made
             login = null;
         }
 
+        public void loginRequest(Request request) {
+            login = ((LoginRequest) request).getUsername();
+            // let the user know the login request was received
+            out.println(new SuccessResponse());
+        }
+
+        public void postRequest(Request request, long currentTime) {
+            String message = ((PostRequest) request).getMessage();
+            // make sure users can access message board concurrently
+            // synchronized to avoid deadlocks
+            synchronized (ClientHandler.class) {
+                // construct message
+                Message sentMessage = new Message(message, login, currentTime);
+                messageBoard.add(sentMessage);
+                out.println(sentMessage + "\n");
+            }
+            // let user know that the post request was received
+            out.println(new SuccessResponse());
+        }
+
+        public void readRequest() {
+            List<Message> messages;
+            synchronized (ClientHandler.class) {
+                messages = messageBoard.subList(read, messageBoard.size());
+                for (Message message : messages) {
+                    out.println("sent " + message);
+                }
+            }
+            // set number of unread messages
+            read = messageBoard.size();
+            // respond with a list of unread messages
+
+            out.println(new MessageListResponse(messages));
+        }
+
         public void run() {
             try {
                 String inputLine;
-                while((inputLine = in.readLine()) != null) {
+                while ((inputLine = in.readLine()) != null) {
                     long currentTime = time.getCurrentTime();
 
-                    if(login != null) {
+                    if (login != null) {
                         System.out.println(login + ": " + inputLine);
                     } else {
                         System.out.println(inputLine);
@@ -59,37 +101,20 @@ public class Server {
                     // LOGIN REQUEST
                     // can only log in if not already logged in
                     if(login == null && (request = LoginRequest.fromJSON(json)) != null) {
-                        login = ((LoginRequest)request).getUsername();
-                        // let the user know the login request was received
-                        out.println(new SuccessResponse());
+                        loginRequest(request);
                     }
 
                     // POST REQUEST
                     // can only make a post if they are already logged in
                     if(login != null && (request = PostRequest.fromJSON(json)) != null) {
-                        String message = ((PostRequest)request).getMessage();
-                        // make sure users can access message board concurrently
-                        // synchronized to avoid deadlocks
-                        synchronized (ClientHandler.class) {
-                            // construct message
-                            messageBoard.add(new Message(message, login, currentTime));
-                        }
-                        // let user know that the post request was received
-                        out.println(new SuccessResponse());
+                        postRequest(request, currentTime);
                         continue;
                     }
 
                     // READ REQUEST
                     // can only read a message if they are already logged in
                     if(login != null && ReadRequest.fromJSON(json) != null) {
-                        List<Message> messages;
-                        synchronized (ClientHandler.class) {
-                            messages = messageBoard.subList(read, messageBoard.size());
-                        }
-                        // set number of unread messages
-                        read = messageBoard.size();
-                        // respond with a list of unread messages
-                        out.println(new MessageListResponse(messages));
+                        readRequest();
                         continue;
                     }
 
