@@ -39,6 +39,7 @@ java -cp json-simple-1.1.1.jar:. MessageBoardGUI.java
   -
   - SuccessResponse
   - ErrorResponse
+  - MessageListResponse
   
 # Included Files
 - json-simple-1.1.1.jar
