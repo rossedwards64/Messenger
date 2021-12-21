@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 public class ReadRequest extends Request {
     private static final String _class = ReadRequest.class.getSimpleName();
 
-    public ReadRequest() {}
+    public ReadRequest() { /* empty because there are no instance fields */ }
 
     @SuppressWarnings("unchecked")
     public Object toJSON() {

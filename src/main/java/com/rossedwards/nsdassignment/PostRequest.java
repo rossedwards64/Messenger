@@ -29,7 +29,6 @@ public class PostRequest extends Request {
             JSONObject obj = (JSONObject) value;
             if(!_class.equals(obj.get("_class")))
                 return null;
-
             String message = (String)obj.get("message");
             return new PostRequest(message);
         } catch(ClassCastException | NullPointerException e) {

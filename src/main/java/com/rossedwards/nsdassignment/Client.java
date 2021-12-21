@@ -67,7 +67,7 @@ public class Client {
         Object json = JSONValue.parse(serverResponse);
         Response response;
 
-        if (SuccessResponse.fromJSON(json) != null)
+        if (SuccessResponse.fromJSON(json) == null)
             return;
 
         if ((response = MessageListResponse.fromJSON(json)) != null) {

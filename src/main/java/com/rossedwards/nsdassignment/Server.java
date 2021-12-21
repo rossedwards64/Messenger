@@ -27,7 +27,7 @@ public class Server {
 
     // abstract all server responses to enable returning values
     static class ClientHandler extends Thread {
-        protected static final List<Message> messageBoard = new ArrayList<>();
+        private static final List<Message> messageBoard = new ArrayList<>();
         private static final Clock time = new Clock();
         // messages that have been opened are added to this counter
         private int read;
@@ -46,6 +46,10 @@ public class Server {
             read = 0;
             // set to null until a login account has been made
             login = null;
+        }
+
+        public static List<Message> getMessageBoard() {
+            return messageBoard;
         }
 
         public void loginRequest(Request request) {
@@ -102,6 +106,7 @@ public class Server {
                     // can only log in if not already logged in
                     if(login == null && (request = LoginRequest.fromJSON(json)) != null) {
                         loginRequest(request);
+                        continue;
                     }
 
                     // POST REQUEST

@@ -2,6 +2,7 @@ package com.rossedwards.nsdassignment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -34,12 +35,17 @@ public class MessageBoardController {
     public ToggleButton subscribeButton4;
     public ToggleButton subscribeButton5;
     public ToggleButton subscribeButton6;
-    public Button generalChannelButton;
-    public Button musicChannelButton;
-    public Button softwareChannelButton;
-    public Button gamingChannelButton;
-    public Button beekeepingChannelButton;
-    public Button literatureChannelButton;
+    public ToggleGroup channelGroup;
+    public TextField sendImageBox;
+    public Button sendMessageButton1;
+    public Button updateChat1;
+    public ImageView imageView;
+    public ToggleButton generalButton;
+    public ToggleButton musicButton;
+    public ToggleButton softwareButton;
+    public ToggleButton gamingButton;
+    public ToggleButton beeButton;
+    public ToggleButton litButton;
 
     @FXML
     private Label usernameLabel;
@@ -55,29 +61,10 @@ public class MessageBoardController {
 
     @FXML
     protected void connectedState() {
-        if(socket.isConnected()) {
+        if (socket.isConnected()) {
             isConnectedLabel.setText("Connected.");
         } else {
             isConnectedLabel.setText("Disconnected.");
-        }
-    }
-
-    @FXML
-    protected void sendMessage() throws IOException {
-        String message;
-        if((message = sendMessageBox.getText()) != null) {
-            client.writer.println(message);
-            client.setRequestPost(message);
-            display.appendText(client.getUsername() + ": " + message + "\n");
-            sendMessageBox.clear();
-        }
-    }
-
-    @FXML
-    protected void readChat() throws IOException {
-        client.setRequestRead();
-        for (Message message : Server.ClientHandler.messageBoard) {
-            display.appendText(message + "\n");
         }
     }
 
@@ -95,52 +82,111 @@ public class MessageBoardController {
     }
 
     @FXML
-    protected void subscribe() {
+    protected void sendMessage() throws IOException {
+        String message;
+        if ((message = sendMessageBox.getText()) != null) {
+            client.setRequestPost(message);
+            client.writer.println(message);
+            display.appendText(client.getUsername() + ": " + message + "\n");
+            sendMessageBox.clear();
+        }
+    }
+
+    @FXML
+    protected void readChat() throws IOException {
+        client.setRequestRead();
+        for (Message message : Server.ClientHandler.getMessageBoard()) {
+            display.appendText(message + "\n");
+        }
+    }
+
+
+    @FXML
+    protected void subscribeGeneral() {
         if (subscribeButton.isSelected()) {
+            display.appendText("Subscribed to the general channel." + "\n");
             subscribeButton.setText("Unsubscribe");
-            display.appendText("Welcome to the General Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the general channel." + "\n");
             subscribeButton.setText("Subscribe");
-            display.clear();
         }
+    }
 
+    @FXML
+    protected void subscribeMusic() {
         if (subscribeButton2.isSelected()) {
+            display.appendText("Subscribed to the music channel." + "\n");
             subscribeButton2.setText("Unsubscribe");
-            display.appendText("Welcome to the Music Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the music channel." + "\n");
             subscribeButton2.setText("Subscribe");
-            display.clear();
         }
+    }
 
+    @FXML
+    protected void subscribeSoftware() {
         if (subscribeButton3.isSelected()) {
+            display.appendText("Subscribed to the software engineering channel." + "\n");
             subscribeButton3.setText("Unsubscribe");
-            display.appendText("Welcome to the Software Engineering Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the software channel." + "\n");
             subscribeButton3.setText("Subscribe");
-            display.clear();
         }
+    }
 
+    @FXML
+    protected void subscribeGaming() {
         if (subscribeButton4.isSelected()) {
+            display.appendText("Subscribed to the gaming channel." + "\n");
             subscribeButton4.setText("Unsubscribe");
-            display.appendText("Welcome to the Gaming Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the gaming channel." + "\n");
             subscribeButton4.setText("Subscribe");
-            display.clear();
         }
+    }
 
+    @FXML
+    protected void subscribeBees() {
         if (subscribeButton5.isSelected()) {
+            display.appendText("Subscribed to the beekeeping channel." + "\n");
             subscribeButton5.setText("Unsubscribe");
-            display.appendText("Welcome to the Beekeeping Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the beekeeping channel." + "\n");
             subscribeButton5.setText("Subscribe");
-            display.clear();
         }
+    }
 
+    @FXML
+    protected void subscribeLit() {
         if (subscribeButton6.isSelected()) {
+            display.appendText("Subscribed to the literature channel." + "\n");
             subscribeButton6.setText("Unsubscribe");
-            display.appendText("Welcome to the Literature Channel." + "\n");
         } else {
+            display.appendText("Unsubscribed from the literature channel." + "\n");
             subscribeButton6.setText("Subscribe");
+        }
+    }
+
+    @FXML
+    protected void moveChannel() {
+        Toggle selectedToggle = channelGroup.getSelectedToggle();
+        if (generalButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the general channel." + "\n");
+            display.clear();
+        } else if (musicButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the music channel." + "\n");
+            display.clear();
+        } else if (softwareButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the software engineering channel." + "\n");
+            display.clear();
+        } else if (gamingButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the gaming channel." + "\n");
+            display.clear();
+        } else if (beeButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the beekeeping channel." + "\n");
+            display.clear();
+        } else if (litButton.equals(selectedToggle)) {
+            display.appendText("Welcome to the literature channel." + "\n");
             display.clear();
         }
     }
