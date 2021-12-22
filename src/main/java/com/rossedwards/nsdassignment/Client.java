@@ -44,6 +44,12 @@ public class Client {
         processRequest(request);
     }
 
+    public void setRequestPostImage(String fileName) throws IOException {
+        reader = new Scanner(fileName);
+        Request request = new PostRequest(reader.nextLine());
+        processRequest(request);
+    }
+
     public void setRequestRead() throws IOException {
         Request request = new ReadRequest();
         processRequest(request);
@@ -59,7 +65,9 @@ public class Client {
     }
 
     public void processRequest(Request request) throws IOException {
+
         writer.println(request);
+        writer.flush();
         String serverResponse;
         if ((serverResponse = in.readLine()) == null)
             return;
@@ -72,12 +80,15 @@ public class Client {
 
         if ((response = MessageListResponse.fromJSON(json)) != null) {
             for (Message message : ((MessageListResponse) response).getMessages()) {
-                System.out.println(message);
+                writer.println(message);
             }
+            writer.flush();
+            return;
         }
 
         if ((response = ErrorResponse.fromJSON(json)) != null) {
             System.out.println(((ErrorResponse) response).getError());
+            writer.flush();
         }
     }
 }

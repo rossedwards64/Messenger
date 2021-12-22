@@ -26,7 +26,7 @@ public class Database {
             ResultSet result = pstmt.executeQuery();
 
             if (result.next()) {
-                System.out.println("Welcome back, " + username);
+                System.out.println("Logging in " + username);
                 conn.close();
             } else {
                 System.out.println("Registering " + username);

@@ -8,13 +8,13 @@
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rossedwards.nsdassignment.MessageBoardController">
   <VBox prefHeight="720.0" prefWidth="1280.0">
-    <MenuBar VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Preferences…"/>
-            <SeparatorMenuItem mnemonicParsing="false"/>
-            <MenuItem mnemonicParsing="false" text="Quit"/>
-        </Menu>
-    </MenuBar>
+      <MenuBar VBox.vgrow="NEVER">
+          <Menu mnemonicParsing="false" text="Edit">
+              <MenuItem mnemonicParsing="false" text="Preferences…"/>
+              <SeparatorMenuItem mnemonicParsing="false"/>
+              <MenuItem mnemonicParsing="false" text="Quit"/>
+          </Menu>
+      </MenuBar>
       <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" VBox.vgrow="ALWAYS">
           <AnchorPane>
               <Label alignment="CENTER" layoutX="11.0" layoutY="119.0" minWidth="60.0" style="&#10;"
@@ -56,8 +56,6 @@
                          prefHeight="25.0" prefWidth="187.0"/>
               <Button fx:id="quitButton" layoutX="14.0" layoutY="627.0" mnemonicParsing="false" onAction="#quit"
                       prefHeight="25.0" prefWidth="60.0" text="Quit"/>
-              <Button fx:id="updateChat" layoutX="250.0" layoutY="193.0" mnemonicParsing="false" onAction="#readChat"
-                      text="Update"/>
               <Label alignment="CENTER" layoutX="14.0" layoutY="204.0" minWidth="60.0" style="&#10;"
                      text="Send an Image" textAlignment="CENTER">
                   <font>
@@ -70,8 +68,6 @@
               <TextField fx:id="sendImageBox" layoutX="19.0" layoutY="237.0" prefHeight="25.0" prefWidth="224.0"/>
               <Button fx:id="sendMessageButton1" layoutX="251.0" layoutY="234.0" mnemonicParsing="false"
                       onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send"/>
-              <Button fx:id="updateChat1" layoutX="250.0" layoutY="273.0" mnemonicParsing="false" onAction="#readChat"
-                      text="Update"/>
               <ImageView fx:id="imageView" fitHeight="290.0" fitWidth="267.0" layoutX="25.0" layoutY="314.0"
                          pickOnBounds="true" preserveRatio="true"/>
           </AnchorPane>

@@ -24,8 +24,6 @@ public class MessageBoardController {
     public Button sendMessageButton;
     public Button setUsernameButton;
     public Button quitButton;
-    static Client client;
-    static Socket socket;
     public TextField setUsernameField;
     public Label isConnectedLabel;
     public Button updateChat;
@@ -46,6 +44,8 @@ public class MessageBoardController {
     public ToggleButton gamingButton;
     public ToggleButton beeButton;
     public ToggleButton litButton;
+    public static Client client;
+    public static Socket socket;
 
     @FXML
     private Label usernameLabel;
@@ -86,17 +86,28 @@ public class MessageBoardController {
         String message;
         if ((message = sendMessageBox.getText()) != null) {
             client.setRequestPost(message);
-            client.writer.println(message);
-            display.appendText(client.getUsername() + ": " + message + "\n");
+            System.out.println(client.in.readLine());
+            readChat();
             sendMessageBox.clear();
         }
     }
 
     @FXML
+    protected void sendImage() throws IOException {
+        String fileName;
+        if ((fileName = sendImageBox.getText()) != null) {
+
+        }
+    }
+
+    @FXML
     protected void readChat() throws IOException {
+        String message;
         client.setRequestRead();
-        for (Message message : Server.ClientHandler.getMessageBoard()) {
+        if ((message = client.in.readLine()) != null) {
             display.appendText(message + "\n");
+        } else {
+            System.out.println("All messages have been read.");
         }
     }
 

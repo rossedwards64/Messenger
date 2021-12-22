@@ -33,23 +33,17 @@ public class Server {
         private int read;
         // login credentials
         private String login;
-        private final Socket client;
 
         private final PrintWriter out;
         private final BufferedReader in;
 
         // class constructor to initialise socket and so client can send and receive messages
         public ClientHandler(Socket socket) throws IOException {
-            client = socket;
-            out = new PrintWriter(client.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             read = 0;
             // set to null until a login account has been made
             login = null;
-        }
-
-        public static List<Message> getMessageBoard() {
-            return messageBoard;
         }
 
         public void loginRequest(Request request) {
@@ -76,14 +70,10 @@ public class Server {
             List<Message> messages;
             synchronized (ClientHandler.class) {
                 messages = messageBoard.subList(read, messageBoard.size());
-                for (Message message : messages) {
-                    out.println("sent " + message);
-                }
             }
             // set number of unread messages
             read = messageBoard.size();
             // respond with a list of unread messages
-
             out.println(new MessageListResponse(messages));
         }
 
