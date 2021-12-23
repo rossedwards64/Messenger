@@ -2,13 +2,20 @@ package com.rossedwards.nsdassignment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.simple.JSONValue;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class MessageBoardController {
 
@@ -20,13 +27,14 @@ public class MessageBoardController {
     public Color x21;
     public Font x3;
     public Color x4;
+    public Font x111;
+    public Color x211;
     public TextArea display;
     public Button sendMessageButton;
     public Button setUsernameButton;
     public Button quitButton;
     public TextField setUsernameField;
     public Label isConnectedLabel;
-    public Button updateChat;
     public ToggleButton subscribeButton;
     public ToggleButton subscribeButton2;
     public ToggleButton subscribeButton3;
@@ -34,10 +42,10 @@ public class MessageBoardController {
     public ToggleButton subscribeButton5;
     public ToggleButton subscribeButton6;
     public ToggleGroup channelGroup;
-    public TextField sendImageBox;
-    public Button sendMessageButton1;
-    public Button updateChat1;
+    public Label imageSection;
     public ImageView imageView;
+    public Button attachImageButton;
+    public Button updateImage;
     public ToggleButton generalButton;
     public ToggleButton musicButton;
     public ToggleButton softwareButton;
@@ -46,6 +54,7 @@ public class MessageBoardController {
     public ToggleButton litButton;
     public static Client client;
     public static Socket socket;
+    public List<String> extensionFilter;
 
     @FXML
     private Label usernameLabel;
@@ -84,33 +93,106 @@ public class MessageBoardController {
     @FXML
     protected void sendMessage() throws IOException {
         String message;
-        if ((message = sendMessageBox.getText()) != null) {
-            client.setRequestPost(message);
-            System.out.println(client.in.readLine());
-            readChat();
-            sendMessageBox.clear();
+        try {
+            if ((message = sendMessageBox.getText()) != null) {
+                client.setRequestPost(message);
+                client.in.readLine();
+                readChat();
+                sendMessageBox.clear();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Nothing to send in the text area.");
         }
     }
 
     @FXML
-    protected void sendImage() throws IOException {
-        String fileName;
-        if ((fileName = sendImageBox.getText()) != null) {
+    protected void attachImage() throws IOException {
+        extensionFilter = new ArrayList<>();
+        extensionFilter.add("*.jpg");
+        extensionFilter.add("*.png");
+        extensionFilter.add("*.gif");
+        FileChooser chooseFile = new FileChooser();
+        chooseFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", extensionFilter));
+        File file = chooseFile.showOpenDialog(null);
 
+        if (file != null) {
+            byte[] rawData = readBytes(file);
+            String encodedImage = Base64.getEncoder().encodeToString(rawData);
+
+            FileWriter out = new FileWriter(file.getAbsolutePath() + ".base64");
+            out.write(encodedImage);
+            out.close();
+
+            client.setRequestPostImage(encodedImage);
+            readImages();
         }
+    }
+
+    private byte[] readBytes(File file) throws IOException {
+        byte[] content = new byte[(int) file.length()];
+        InputStream in = new FileInputStream(file);
+        int n = in.read(content);
+        in.close();
+        if (n != (int) file.length()) {
+            throw new IOException(n + " (bytes read) != (file size) " + (int) file.length());
+        }
+        return content;
+    }
+
+
+    @FXML
+    protected void saveImage(Message image) throws IOException {
+        File file = new File("image.jpg");
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(image.getBody());
+        writer.close();
     }
 
     @FXML
     protected void readChat() throws IOException {
-        String message;
+        String messageStr;
         client.setRequestRead();
-        if ((message = client.in.readLine()) != null) {
-            display.appendText(message + "\n");
+        if ((messageStr = client.in.readLine()) != null) {
+            Object json = JSONValue.parse(messageStr);
+            MessageListResponse response;
+            if ((response = MessageListResponse.fromJSON(json)) != null) {
+                for (Message message : response.getMessages()) {
+                    display.appendText(message + "\n");
+                }
+            }
         } else {
             System.out.println("All messages have been read.");
         }
     }
 
+    @FXML
+    protected void readImages() throws IOException {
+        String imagesToDecode;
+        client.setRequestReadImage();
+        if ((imagesToDecode = client.in.readLine()) != null) {
+            Object json = JSONValue.parse(imagesToDecode);
+            ImageListResponse response;
+            if ((response = ImageListResponse.fromJSON(json)) != null) {
+                byte[] decodedImage;
+                ByteArrayInputStream in;
+                for (Message image : response.getImages()) {
+                    decodedImage = Base64.getDecoder().decode(image.getBody());
+                    in = new ByteArrayInputStream(decodedImage);
+                    Image displayImage = new Image(in);
+                    imageView = new ImageView(displayImage);
+                    imageView.setFitHeight(311);
+                    imageView.setFitWidth(267);
+                    imageView.setPreserveRatio(true);
+                    imageSection.setGraphic(imageView);
+                    saveImage(image);
+                    in.close();
+                }
+            }
+        } else {
+            System.out.println("All images read.");
+        }
+    }
 
     @FXML
     protected void subscribeGeneral() {

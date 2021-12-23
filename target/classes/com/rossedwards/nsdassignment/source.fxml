@@ -23,120 +23,124 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rossedwards.nsdassignment.MessageBoardController">
   <VBox prefHeight="720.0" prefWidth="1280.0">
-    <MenuBar VBox.vgrow="NEVER">
-      <Menu mnemonicParsing="false" text="Edit">
-        <MenuItem mnemonicParsing="false" text="Preferences…" />
-        <SeparatorMenuItem mnemonicParsing="false" />
-        <MenuItem mnemonicParsing="false" text="Quit" />
-      </Menu>
-    </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" VBox.vgrow="ALWAYS">
-      <AnchorPane>
-        <Label alignment="CENTER" layoutX="11.0" layoutY="119.0" minWidth="60.0" style="&#10;" text="Send a Message" textAlignment="CENTER">
-          <font>
-            <Font size="18.0" fx:id="x1" />
-          </font>
-          <textFill>
-            <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-          </textFill>
-        </Label>
-        <TextField fx:id="sendMessageBox" layoutX="16.0" layoutY="157.0" onAction="#sendMessage" prefHeight="25.0" prefWidth="224.0" />
-        <Button fx:id="sendMessageButton" layoutX="248.0" layoutY="150.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send" />
-        <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" style="&#10;" text="Profile" textAlignment="CENTER">
-          <font>
-            <Font size="18.0" fx:id="x11" />
-          </font>
-          <textFill>
-            <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
-          </textFill>
-        </Label>
-            <Label layoutX="19.0" layoutY="41.0" prefHeight="40.0" prefWidth="66.0" text="Name:">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <Label fx:id="usernameLabel" layoutX="72.0" layoutY="41.0" prefHeight="40.0" prefWidth="150.0" text="User">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <Button fx:id="setUsernameButton" layoutX="211.0" layoutY="81.0" mnemonicParsing="false" onAction="#setUsernameLabelText" text="Set Username" />
-            <TextField fx:id="setUsernameField" layoutX="17.0" layoutY="81.0" onAction="#setUsernameLabelText" prefHeight="25.0" prefWidth="187.0" />
-            <Button fx:id="quitButton" layoutX="14.0" layoutY="627.0" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="60.0" text="Quit" />
-            <Button fx:id="updateChat" layoutX="250.0" layoutY="193.0" mnemonicParsing="false" onAction="#readChat" text="Update" />
-            <Label alignment="CENTER" layoutX="14.0" layoutY="204.0" minWidth="60.0" style="&#10;" text="Send an Image" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" fx:id="x111" />
-               </font>
-               <textFill>
-                  <Color red="0.624" green="0.624" blue="0.624" fx:id="x211" />
-               </textFill>
+      <MenuBar VBox.vgrow="NEVER">
+          <Menu mnemonicParsing="false" text="Edit">
+              <MenuItem mnemonicParsing="false" text="Preferences…" />
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Quit" />
+          </Menu>
+      </MenuBar>
+      <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" VBox.vgrow="ALWAYS">
+          <AnchorPane>
+              <Label alignment="CENTER" layoutX="12.0" layoutY="112.0" minWidth="60.0" style="&#10;" text="Send a Message" textAlignment="CENTER">
+                  <font>
+                      <Font size="18.0" fx:id="x1" />
+                  </font>
+                  <textFill>
+                      <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                  </textFill>
+              </Label>
+              <TextField fx:id="sendMessageBox" layoutX="17.0" layoutY="150.0" onAction="#sendMessage" prefHeight="25.0" prefWidth="224.0" />
+              <Button fx:id="sendMessageButton" layoutX="249.0" layoutY="143.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send" />
+              <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" style="&#10;" text="Profile" textAlignment="CENTER">
+                  <font>
+                      <Font size="18.0" fx:id="x11" />
+                  </font>
+                  <textFill>
+                      <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
+                  </textFill>
+              </Label>
+              <Label layoutX="19.0" layoutY="41.0" prefHeight="40.0" prefWidth="66.0" text="Name:">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </Label>
+              <Label fx:id="usernameLabel" layoutX="72.0" layoutY="41.0" prefHeight="40.0" prefWidth="150.0" text="User">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </Label>
+              <Button fx:id="setUsernameButton" layoutX="211.0" layoutY="81.0" mnemonicParsing="false" onAction="#setUsernameLabelText" text="Set Username" />
+              <TextField fx:id="setUsernameField" layoutX="17.0" layoutY="81.0" onAction="#setUsernameLabelText" prefHeight="25.0" prefWidth="187.0" />
+              <Button fx:id="quitButton" layoutX="14.0" layoutY="627.0" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="60.0" text="Quit" />
+              <Label alignment="CENTER" layoutX="15.0" layoutY="186.0" minWidth="60.0" style="&#10;" text="Send an Image" textAlignment="CENTER">
+                  <font>
+                      <Font size="18.0" fx:id="x111" />
+                  </font>
+                  <textFill>
+                      <Color red="0.624" green="0.624" blue="0.624" fx:id="x211" />
+                  </textFill>
+              </Label>
+              <Button fx:id="attachImageButton" layoutX="10.0" layoutY="216.0" mnemonicParsing="false" onAction="#attachImage" prefHeight="32.0" prefWidth="300.0" text="Attach an Image..." />
+            <Label fx:id="imageSection" layoutX="26.0" layoutY="292.0" prefHeight="311.0" prefWidth="267.0">
+               <graphic>
+                    <ImageView fx:id="imageView" fitHeight="311.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
             </Label>
-            <TextField fx:id="sendImageBox" layoutX="19.0" layoutY="237.0" prefHeight="25.0" prefWidth="224.0" />
-            <Button fx:id="sendMessageButton1" layoutX="251.0" layoutY="234.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send" />
-            <Button fx:id="updateChat1" layoutX="250.0" layoutY="273.0" mnemonicParsing="false" onAction="#readChat" text="Update" />
-            <ImageView fx:id="imageView" fitHeight="290.0" fitWidth="267.0" layoutX="25.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true" />
-      </AnchorPane>
-      <ScrollPane>
-        <AnchorPane id="Content" prefHeight="672.0" prefWidth="633.0">
-          <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Chat View" textAlignment="CENTER" textFill="$x2" />
-               <TextArea fx:id="display" layoutX="54.0" layoutY="53.0" prefHeight="575.0" prefWidth="510.0" />
-        </AnchorPane>
-      </ScrollPane>
-      <AnchorPane>
-        <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Channels" textAlignment="CENTER" textFill="$x2" />
-            <ToggleButton fx:id="subscribeButton" layoutX="223.0" layoutY="55.0" mnemonicParsing="false" onAction="#subscribeGeneral" text="Subscribe" />
-            <ToggleButton fx:id="subscribeButton2" layoutX="223.0" layoutY="103.0" mnemonicParsing="false" onAction="#subscribeMusic" text="Subscribe" />
-            <ToggleButton fx:id="subscribeButton3" layoutX="223.0" layoutY="152.0" mnemonicParsing="false" onAction="#subscribeSoftware" text="Subscribe" />
-            <ToggleButton fx:id="subscribeButton4" layoutX="223.0" layoutY="200.0" mnemonicParsing="false" onAction="#subscribeGaming" text="Subscribe" />
-            <ToggleButton fx:id="subscribeButton5" layoutX="223.0" layoutY="248.0" mnemonicParsing="false" onAction="#subscribeBees" text="Subscribe" />
-            <ToggleButton fx:id="subscribeButton6" layoutX="223.0" layoutY="296.0" mnemonicParsing="false" onAction="#subscribeLit" text="Subscribe" />
-            <ToggleButton fx:id="generalButton" layoutX="23.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="General">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="channelGroup" />
-               </toggleGroup>
-            </ToggleButton>
-            <ToggleButton fx:id="musicButton" layoutX="23.0" layoutY="94.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Music" toggleGroup="$channelGroup">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="softwareButton" layoutX="23.0" layoutY="143.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Software Engineering" toggleGroup="$channelGroup">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="gamingButton" layoutX="23.0" layoutY="191.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Gaming" toggleGroup="$channelGroup">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="beeButton" layoutX="23.0" layoutY="239.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Beekeeping" toggleGroup="$channelGroup">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton fx:id="litButton" layoutX="23.0" layoutY="287.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Literature" toggleGroup="$channelGroup">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </ToggleButton>
-      </AnchorPane>
-    </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-      <Label fx:id="isConnectedLabel" maxHeight="1.7976931348623157E308" onMouseMoved="#connectedState" text="Connected" HBox.hgrow="ALWAYS">
-        <font>
-          <Font size="11.0" fx:id="x3" />
-        </font>
-        <textFill>
-          <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
-        </textFill>
-      </Label>
-      <Pane HBox.hgrow="ALWAYS" />
-    </HBox>
+            <Button fx:id="updateImage" layoutX="228.0" layoutY="256.0" mnemonicParsing="false" onAction="#readImages" prefHeight="27.0" prefWidth="60.0" text="Update" />
+          </AnchorPane>
+          <ScrollPane>
+              <AnchorPane id="Content" prefHeight="672.0" prefWidth="633.0">
+                  <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Chat View" textAlignment="CENTER" textFill="$x2" />
+                  <TextArea fx:id="display" layoutX="54.0" layoutY="53.0" prefHeight="575.0" prefWidth="510.0" />
+              </AnchorPane>
+          </ScrollPane>
+          <AnchorPane>
+              <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Channels" textAlignment="CENTER" textFill="$x2" />
+              <ToggleButton fx:id="subscribeButton" layoutX="223.0" layoutY="55.0" mnemonicParsing="false" onAction="#subscribeGeneral" text="Subscribe" />
+              <ToggleButton fx:id="subscribeButton2" layoutX="223.0" layoutY="103.0" mnemonicParsing="false" onAction="#subscribeMusic" text="Subscribe" />
+              <ToggleButton fx:id="subscribeButton3" layoutX="223.0" layoutY="152.0" mnemonicParsing="false" onAction="#subscribeSoftware" text="Subscribe" />
+              <ToggleButton fx:id="subscribeButton4" layoutX="223.0" layoutY="200.0" mnemonicParsing="false" onAction="#subscribeGaming" text="Subscribe" />
+              <ToggleButton fx:id="subscribeButton5" layoutX="223.0" layoutY="248.0" mnemonicParsing="false" onAction="#subscribeBees" text="Subscribe" />
+              <ToggleButton fx:id="subscribeButton6" layoutX="223.0" layoutY="296.0" mnemonicParsing="false" onAction="#subscribeLit" text="Subscribe" />
+              <ToggleButton fx:id="generalButton" layoutX="23.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="General">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+                  <toggleGroup>
+                      <ToggleGroup fx:id="channelGroup" />
+                  </toggleGroup>
+              </ToggleButton>
+              <ToggleButton fx:id="musicButton" layoutX="23.0" layoutY="94.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Music" toggleGroup="$channelGroup">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </ToggleButton>
+              <ToggleButton fx:id="softwareButton" layoutX="23.0" layoutY="143.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Software Engineering" toggleGroup="$channelGroup">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </ToggleButton>
+              <ToggleButton fx:id="gamingButton" layoutX="23.0" layoutY="191.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Gaming" toggleGroup="$channelGroup">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </ToggleButton>
+              <ToggleButton fx:id="beeButton" layoutX="23.0" layoutY="239.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Beekeeping" toggleGroup="$channelGroup">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </ToggleButton>
+              <ToggleButton fx:id="litButton" layoutX="23.0" layoutY="287.0" mnemonicParsing="false" onAction="#moveChannel" prefHeight="40.0" prefWidth="187.0" text="Literature" toggleGroup="$channelGroup">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </ToggleButton>
+          </AnchorPane>
+      </SplitPane>
+      <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+          <padding>
+              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+          </padding>
+          <Label fx:id="isConnectedLabel" maxHeight="1.7976931348623157E308" onMouseMoved="#connectedState" text="Connected" HBox.hgrow="ALWAYS">
+              <font>
+                  <Font size="11.0" fx:id="x3" />
+              </font>
+              <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+              </textFill>
+          </Label>
+          <Pane HBox.hgrow="ALWAYS" />
+      </HBox>
   </VBox>
 </AnchorPane>

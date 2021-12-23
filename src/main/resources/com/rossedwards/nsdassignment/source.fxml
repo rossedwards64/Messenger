@@ -17,7 +17,7 @@
       </MenuBar>
       <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" VBox.vgrow="ALWAYS">
           <AnchorPane>
-              <Label alignment="CENTER" layoutX="11.0" layoutY="119.0" minWidth="60.0" style="&#10;"
+              <Label alignment="CENTER" layoutX="12.0" layoutY="112.0" minWidth="60.0" style="&#10;"
                      text="Send a Message" textAlignment="CENTER">
                   <font>
                       <Font size="18.0" fx:id="x1"/>
@@ -26,9 +26,9 @@
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x2"/>
                   </textFill>
               </Label>
-              <TextField fx:id="sendMessageBox" layoutX="16.0" layoutY="157.0" onAction="#sendMessage" prefHeight="25.0"
+              <TextField fx:id="sendMessageBox" layoutX="17.0" layoutY="150.0" onAction="#sendMessage" prefHeight="25.0"
                          prefWidth="224.0"/>
-              <Button fx:id="sendMessageButton" layoutX="248.0" layoutY="150.0" mnemonicParsing="false"
+              <Button fx:id="sendMessageButton" layoutX="249.0" layoutY="143.0" mnemonicParsing="false"
                       onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send"/>
               <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" style="&#10;" text="Profile"
                      textAlignment="CENTER">
@@ -56,7 +56,7 @@
                          prefHeight="25.0" prefWidth="187.0"/>
               <Button fx:id="quitButton" layoutX="14.0" layoutY="627.0" mnemonicParsing="false" onAction="#quit"
                       prefHeight="25.0" prefWidth="60.0" text="Quit"/>
-              <Label alignment="CENTER" layoutX="14.0" layoutY="204.0" minWidth="60.0" style="&#10;"
+              <Label alignment="CENTER" layoutX="15.0" layoutY="186.0" minWidth="60.0" style="&#10;"
                      text="Send an Image" textAlignment="CENTER">
                   <font>
                       <Font size="18.0" fx:id="x111"/>
@@ -65,11 +65,16 @@
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x211"/>
                   </textFill>
               </Label>
-              <TextField fx:id="sendImageBox" layoutX="19.0" layoutY="237.0" prefHeight="25.0" prefWidth="224.0"/>
-              <Button fx:id="sendMessageButton1" layoutX="251.0" layoutY="234.0" mnemonicParsing="false"
-                      onAction="#sendMessage" prefHeight="32.0" prefWidth="58.0" text="Send"/>
-              <ImageView fx:id="imageView" fitHeight="290.0" fitWidth="267.0" layoutX="25.0" layoutY="314.0"
-                         pickOnBounds="true" preserveRatio="true"/>
+              <Button fx:id="attachImageButton" layoutX="10.0" layoutY="216.0" mnemonicParsing="false"
+                      onAction="#attachImage" prefHeight="32.0" prefWidth="300.0" text="Attach an Image..."/>
+              <Label fx:id="imageSection" layoutX="26.0" layoutY="292.0" prefHeight="311.0" prefWidth="267.0">
+                  <graphic>
+                      <ImageView fx:id="imageView" fitHeight="311.0" fitWidth="267.0" pickOnBounds="true"
+                                 preserveRatio="true"/>
+                  </graphic>
+              </Label>
+              <Button fx:id="updateImage" layoutX="228.0" layoutY="256.0" mnemonicParsing="false" onAction="#readImages"
+                      prefHeight="27.0" prefWidth="60.0" text="Update"/>
           </AnchorPane>
           <ScrollPane>
               <AnchorPane id="Content" prefHeight="672.0" prefWidth="633.0">
