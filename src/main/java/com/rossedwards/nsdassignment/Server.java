@@ -2,7 +2,10 @@ package com.rossedwards.nsdassignment;
 
 import org.json.simple.JSONValue;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -29,7 +32,6 @@ public class Server {
         private static final Clock time = new Clock();
         // messages that have been opened are added to this counter
         private int read;
-        private final ObjectOutputStream objOut;
         // login credentials
         private String login;
 
@@ -40,7 +42,6 @@ public class Server {
         // class constructor to initialise socket and so client can send and receive messages
         private ClientHandler(Socket socket) throws IOException {
             out = new PrintWriter(socket.getOutputStream(), true);
-            objOut = new ObjectOutputStream(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             read = 0;
             // set to null until a login account has been made
@@ -74,7 +75,7 @@ public class Server {
             synchronized (ClientHandler.class) {
                 Message sentImage = new Message(image, login, currentTime);
                 imageBoard.add(sentImage);
-                out.println(sentImage);
+                out.println(sentImage + "\n");
             }
 
             out.println(new SuccessResponse());

@@ -124,7 +124,6 @@ public class MessageBoardController {
             out.close();
 
             client.setRequestPostImage(encodedImage);
-            readImages();
         }
     }
 
@@ -141,12 +140,10 @@ public class MessageBoardController {
 
 
     @FXML
-    protected void saveImage(Message image) throws IOException {
-        File file = new File("image.jpg");
-        file.createNewFile();
-        FileWriter writer = new FileWriter(file);
-        writer.write(image.getBody());
-        writer.close();
+    protected void saveImage(byte[] decodedImage, String fileName) throws IOException {
+        OutputStream out = new FileOutputStream(fileName);
+        out.write(decodedImage);
+        out.close();
     }
 
     @FXML
@@ -174,18 +171,18 @@ public class MessageBoardController {
             Object json = JSONValue.parse(imagesToDecode);
             ImageListResponse response;
             if ((response = ImageListResponse.fromJSON(json)) != null) {
-                byte[] decodedImage;
-                ByteArrayInputStream in;
                 for (Message image : response.getImages()) {
-                    decodedImage = Base64.getDecoder().decode(image.getBody());
-                    in = new ByteArrayInputStream(decodedImage);
+                    byte[] decodedImage = Base64.getDecoder().decode(image.getBody());
+                    saveImage(decodedImage, image.getAuthor() + ".jpg");
+
+                    ByteArrayInputStream in = new ByteArrayInputStream(decodedImage);
                     Image displayImage = new Image(in);
+
                     imageView = new ImageView(displayImage);
                     imageView.setFitHeight(311);
                     imageView.setFitWidth(267);
                     imageView.setPreserveRatio(true);
                     imageSection.setGraphic(imageView);
-                    saveImage(image);
                     in.close();
                 }
             }
