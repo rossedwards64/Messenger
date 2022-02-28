@@ -1,4 +1,4 @@
-# Networked Software Development - Assignment
+# Messenger App
 # Compilation Instructions
 To compile this program, enter the following command into the command prompt/terminal:
 ```
